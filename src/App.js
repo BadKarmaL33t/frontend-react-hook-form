@@ -25,6 +25,7 @@ function App() {
                         maxLength: 50
                     })}
                 />
+                {errors.firstname && <small>{errors.firstname.message}</small>}
                 <label htmlFor="lastname-field">
                     Achternaam:
                 </label>
@@ -37,6 +38,7 @@ function App() {
                         maxLength: 60
                     })}
                 />
+                {errors.lastname && <small>{errors.lastname.message}</small>}
                 <label htmlFor="age-field">
                     Leeftijd:
                 </label>
@@ -44,10 +46,16 @@ function App() {
                     type="text"
                     id="age-field"
                     {...register("age", {
-                        required: true,
-                        min: 18
+                        required: {
+                            value: true,
+                            message: 'Dit veld is verplicht',
+                        },
+                        validate: {
+                            min: (v) => v >= 18 || "je moet minimaal 18 jaar oud zijn",
+                        }
                     })}
                 />
+                {errors.age && <small>{errors.age.message}</small>}
                 <label htmlFor="zipcode-field">
                     Postcode:
                 </label>
@@ -72,7 +80,15 @@ function App() {
                 </label>
                 <select
                     id="delivery-frequency-selector"
-                    {...register("deliveryFrequency")}
+                    {...register("deliveryFrequency", {
+                        required: {
+                        value: true,
+                        message: 'Dit veld is verplicht',
+                    },
+                        validate: {
+                        value: (v) => v !== "Select..." || "selecteer een bezorgfrequentie",
+                    }
+                    })}
                 >
                     <option value="Select...">Select...</option>
                     <option value="iedere week">iedere week</option>
@@ -80,6 +96,7 @@ function App() {
                     <option value="iedere maand">iedere maand</option>
                     <option value="iedere maand">anders</option>
                 </select>
+                {errors.deliveryFrequency && <small>{errors.deliveryFrequency.message}</small>}
                 <label htmlFor="custom-frequency-textarea">
                     Specificeer andere bezorgfrequentie:
                 </label>
