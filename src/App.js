@@ -69,7 +69,7 @@ function App() {
                             message: 'Dit veld is verplicht',
                         },
                         validate: {
-                            maxLength: (v) => v.length <= 7 || "deze postcode bevat teveel tekens",
+                            maxLength: (v) => v['length'] <= 7 || "deze postcode bevat teveel tekens",
                             matchPattern: (v) => /^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)[A-Za-z]{2}$/.test(v) || "dit is geen geldige postcode",
                         }
                     })}
