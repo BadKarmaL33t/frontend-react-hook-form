@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import {useForm} from "react-hook-form";
+import TextInput from "./components/TextInput";
 
 function App() {
     const {handleSubmit, formState: {errors, isDirty, isValid}, register, watch} = useForm({mode: 'onChange'});
@@ -15,81 +16,52 @@ function App() {
         <>
             <form onSubmit={handleSubmit(handleFormSubmit)}>
 
-                <label htmlFor="name-field">
-                    Voornaam:
-                </label>
-                <input
-                    type="text"
-                    id="firstname-field"
-                    {...register("firstName", {
-                        required: {
-                            value: true,
-                            message: 'Dit veld is verplicht',
-                        },
-                        validate: {
-                            matchPattern: (v) => /^[a-zA-Z]+$/.test(v) || "dit veld mag geen cijfers bevatten",
-                            minLength: (v) => v['length'] >= 2 || "vul een geldige naam in",
-                            maxLength: (v) => v['length'] <= 50 || "het maximale aantal karakters is bereikt",
-                        }
-                    })}
+                <TextInput
+                    label="firstname-field"
+                    labelText="Voornaam:"
+                    name="firstName"
+                    register={register}
+                    errors={errors}
+                    customValidateParams={{
+                        matchPattern: (v) => /^[a-zA-Z]+$/.test(v) || "dit veld mag geen cijfers bevatten",
+                        minLength: (v) => v.length >= 2 || "vul een geldige naam in",
+                        maxLength: (v) => v.length <= 50 || "het maximale aantal karakters is bereikt",
+                    }}
                 />
-                {errors.firstName && <small>{errors.firstName.message}</small>}
-                <label htmlFor="lastname-field">
-                    Achternaam:
-                </label>
-                <input
-                    type="text"
-                    id="lastname-field"
-                    {...register("lastName", {
-                        required: {
-                            value: true,
-                            message: 'Dit veld is verplicht',
-                        },
-                        validate: {
-                            matchPattern: (v) => /^[a-zA-Z]+$/.test(v) || "dit veld mag geen cijfers bevatten",
-                            minLength: (v) => v['length'] >= 2 || "vul een geldige naam in",
-                            maxLength: (v) => v['length'] <= 60 || "het maximale aantal karakters is bereikt",
-                        }
-                    })}
+                <TextInput
+                    label="lastname-field"
+                    labelText="Achternaam:"
+                    name="lastName"
+                    register={register}
+                    errors={errors}
+                    customValidateParams={{
+                        matchPattern: (v) => /^[a-zA-Z]+$/.test(v) || "dit veld mag geen cijfers bevatten",
+                        minLength: (v) => v.length >= 2 || "vul een geldige naam in",
+                        maxLength: (v) => v.length <= 60 || "het maximale aantal karakters is bereikt",
+                    }}
                 />
-                {errors.lastName && <small>{errors.lastName.message}</small>}
-                <label htmlFor="age-field">
-                    Leeftijd:
-                </label>
-                <input
-                    type="text"
-                    id="age-field"
-                    {...register("age", {
-                        required: {
-                            value: true,
-                            message: 'Dit veld is verplicht',
-                        },
-                        validate: {
-                            matchPattern: (v) => /^[0-9]+$/.test(v) || "dit veld mag geen letters bevatten",
-                            min: (v) => v >= 18 || "je moet minimaal 18 jaar oud zijn",
-                        }
-                    })}
+                <TextInput
+                    label="age-field"
+                    labelText="Leeftijd:"
+                    name="age"
+                    register={register}
+                    errors={errors}
+                    customValidateParams={{
+                        matchPattern: (v) => /^[0-9]+$/.test(v) || "dit veld mag geen letters bevatten",
+                        min: (v) => v >= 18 || "je moet minimaal 18 jaar oud zijn",
+                    }}
                 />
-                {errors.age && <small>{errors.age.message}</small>}
-                <label htmlFor="zipcode-field">
-                    Postcode:
-                </label>
-                <input
-                    type="text"
-                    id="zipcode-field"
-                    {...register("zipcode", {
-                        required: {
-                            value: true,
-                            minlength: 6,
-                            message: 'Dit veld is verplicht',
-                        },
-                        validate: {
-                            maxLength: (v) => v['length'] <= 7 || "deze postcode bevat teveel tekens",
-                            matchPattern: (v) => /^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)[A-Za-z]{2}$/.test(v) || "dit is geen geldige postcode",
-                        }
-                    })}
+                <TextInput
+                    label="age-field"
+                    labelText="Leeftijd:"
+                    name="age"
+                    register={register}
+                    errors={errors}
+                    customValidateParams={{
+                        maxLength: (v) => v['length'] <= 7 || "deze postcode bevat teveel tekens",
+                        matchPattern: (v) => /^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)[A-Za-z]{2}$/.test(v) || "dit is geen geldige postcode",
+                    }}
                 />
-                {errors.zipcode && <small>{errors.zipcode.message}</small>}
                 <label htmlFor="delivery-frequency-selector">
                     Bezorgfrequentie:
                 </label>
@@ -125,7 +97,8 @@ function App() {
                                 value: (v) => v !== "" || "vul hier uw custom bezorgfrequentie in",
                                 matchPattern: (v) => /^[a-zA-Z]+$/.test(v) || "dit veld mag geen cijfers bevatten",
                                 minLength: (v) => v['length'] > 6 || "vul een geldige bezorgfrequentie in"
-                            }})}
+                            }
+                        })}
                         rows="1"
                         cols="50"
                         maxLength="50"
