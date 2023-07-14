@@ -120,13 +120,19 @@ function App() {
                 }
                 {watchDeliveryFrequency === "other" &&
                     <textarea
-                        {...register("customDeliveryFrequency")}
+                        {...register("customDeliveryFrequency", {
+                            validate: {
+                                value: (v) => v !== "" || "vul hier uw custom bezorgfrequentie in",
+                                matchPattern: (v) => /^[a-zA-Z]+$/.test(v) || "dit veld mag geen cijfers bevatten",
+                                minLength: (v) => v['length'] > 6 || "vul een geldige bezorgfrequentie in"
+                            }})}
                         rows="1"
                         cols="50"
                         maxLength="50"
                     >
                 </textarea>
                 }
+                {errors.customDeliveryFrequency && <small>{errors.customDeliveryFrequency.message}</small>}
                 <label htmlFor="remarks-textarea">
                     Opmerking:
                 </label>
@@ -164,8 +170,7 @@ function App() {
                 </button>
             </form>
         </>
-    )
-        ;
+    );
 }
 
 export default App;
