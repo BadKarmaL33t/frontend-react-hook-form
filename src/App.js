@@ -18,14 +18,20 @@ function App() {
                 </label>
                 <input
                     type="text"
-                    id="name-field"
+                    id="firstname-field"
                     {...register("firstName", {
-                        required: true,
-                        minlength: 2,
-                        maxLength: 50
+                        required: {
+                            value: true,
+                            message: 'Dit veld is verplicht',
+                        },
+                        validate: {
+                            matchPattern: (v) => /^[a-zA-Z]$/.test(v) || "dit veld mag geen cijfers bevatten",
+                            minLength: (v) => v['length'] >= 2 || "vul een geldige naam in",
+                            maxLength: (v) => v['length'] <= 50 || "het maximale aantal karakters is bereikt",
+                        }
                     })}
                 />
-                {errors.firstname && <small>{errors.firstname.message}</small>}
+                {errors.firstName && <small>{errors.firstName.message}</small>}
                 <label htmlFor="lastname-field">
                     Achternaam:
                 </label>
@@ -33,12 +39,18 @@ function App() {
                     type="text"
                     id="lastname-field"
                     {...register("lastName", {
-                        required: true,
-                        minlength: 2,
-                        maxLength: 60
+                        required: {
+                            value: true,
+                            message: 'Dit veld is verplicht',
+                        },
+                        validate: {
+                            matchPattern: (v) => /^[a-zA-Z]$/.test(v) || "dit veld mag geen cijfers bevatten",
+                            minLength: (v) => v['length'] >= 2 || "vul een geldige naam in",
+                            maxLength: (v) => v['length'] <= 60 || "het maximale aantal karakters is bereikt",
+                        }
                     })}
                 />
-                {errors.lastname && <small>{errors.lastname.message}</small>}
+                {errors.lastName && <small>{errors.lastName.message}</small>}
                 <label htmlFor="age-field">
                     Leeftijd:
                 </label>
@@ -51,6 +63,7 @@ function App() {
                             message: 'Dit veld is verplicht',
                         },
                         validate: {
+                            matchPattern: (v) => /^[0-9]$/.test(v) || "dit veld mag geen letters bevatten",
                             min: (v) => v >= 18 || "je moet minimaal 18 jaar oud zijn",
                         }
                     })}
