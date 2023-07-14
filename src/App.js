@@ -52,9 +52,9 @@ function App() {
                     }}
                 />
                 <TextInput
-                    label="age-field"
-                    labelText="Leeftijd:"
-                    name="age"
+                    label="zipcode-field"
+                    labelText="Postcode:"
+                    name="zipcode"
                     register={register}
                     errors={errors}
                     customValidateParams={{
